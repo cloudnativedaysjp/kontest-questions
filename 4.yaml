@@ -56,3 +56,5 @@ data:
         app: nginx-app
   comment: |-
     this is comment here after correct answer
+  author: |-
+    Masaya Aoyama (@amsy810)

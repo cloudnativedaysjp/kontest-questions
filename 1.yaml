@@ -41,3 +41,5 @@ data:
         image: nginx:1.19
   comment: |-
     this is comment here after correct answer
+  author: |-
+    Masaya Aoyama (@amsy810)

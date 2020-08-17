@@ -86,3 +86,5 @@ data:
                   command: ["sleep", "3"]
   comment: |-
     this is comment here after correct answer
+  author: |-
+    Masaya Aoyama (@amsy810)
