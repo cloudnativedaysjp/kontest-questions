@@ -1,0 +1,43 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: q1
+  labels:
+    question.kontest.amsy.dev: "1"
+data:
+  question: |-
+    コンテナイメージは、「イメージ名：バージョンタグ」で指定します。
+    下記のPodで利用されているコンテナイメージではlatestタグが利用されていますが、latestタグはその時点の最新バージョンを意味するため、次回のPod再作成時に別のイメージになってしまう可能性があることから利用は避けたほうが良いでしょう。
+    今回は下記のPodで利用するイメージをlatestではなく1.19のタグを利用して特定のNginxのバージョンを利用するようにしてください。
+
+    apiVersion: v1
+    kind: Pod
+    metadata:
+      name: sample-pod
+    spec:
+      containers:
+      - name: nginx-container
+        image: nginx:latest
+  hint: |-
+    https://kubernetes.io/docs/concepts/containers/images/
+  base_content.yaml: |-
+    apiVersion: v1
+    kind: Pod
+    metadata:
+      name: sample-pod
+    spec:
+      containers:
+      - name: nginx-container
+        image: nginx:latest
+  answer.yaml: |-
+    apiVersion: v1
+    kind: Pod
+    metadata:
+      name: sample-pod
+    spec:
+      containers:
+      - name: nginx-container
+        image: nginx:1.19
+  comment: |-
+    this is comment here after correct answer

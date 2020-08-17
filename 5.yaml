@@ -1,0 +1,88 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: q5
+  labels:
+    question.kontest.amsy.dev: "5"
+data:
+  question: |-
+    次のServiceとDeploymentを作成後、Deploymentのイメージを変更した際にServiceリソース経由のリクエストで断が発生しました。
+    これは、「Serviceの転送先リストから該当のPodを外すタイミング」と「Pod（コンテナ）を停止するタイミング」がほぼ同時に行われるために生じます。
+    この問題に対応するために、コンテナの停止前に3秒待ってから停止するようにしてください（実行コマンドは"sleep 3"としてください）。
+    
+    apiVersion: apps/v1
+    kind: Deployment
+    metadata:
+      name: sample-deployment
+    spec:
+      replicas: 3
+      selector:
+        matchLabels:
+          app: sample-app
+      template:
+        metadata:
+          labels:
+            app: sample-app
+        spec:
+          containers:
+          - name: nginx-container
+            image: amsy810/echo-nginx:v2.0
+
+    apiVersion: v1
+    kind: Service
+    metadata:
+      name: sample-clusterip
+    spec:
+      type: ClusterIP
+      ports:
+      - name: "http-port"
+        protocol: "TCP"
+        port: 8080
+        targetPort: 80
+      selector:
+        app: sample-app
+  hint: |-
+    https://qiita.com/superbrothers/items/3ac78daba3560ea406b2
+  base_content.yaml: |-
+    apiVersion: apps/v1
+    kind: Deployment
+    metadata:
+      name: sample-deployment
+    spec:
+      replicas: 3
+      selector:
+        matchLabels:
+          app: sample-app
+      template:
+        metadata:
+          labels:
+            app: sample-app
+        spec:
+          containers:
+          - name: nginx-container
+            image: amsy810/echo-nginx:v2.0
+  answer.yaml: |-
+    apiVersion: apps/v1
+    kind: Deployment
+    metadata:
+      name: sample-deployment
+    spec:
+      replicas: 3
+      selector:
+        matchLabels:
+          app: sample-app
+      template:
+        metadata:
+          labels:
+            app: sample-app
+        spec:
+          containers:
+          - name: nginx-container
+            image: amsy810/echo-nginx:v2.0
+            lifecycle:
+              preStop:
+                exec:
+                  command: ["sleep", "3"]
+  comment: |-
+    this is comment here after correct answer

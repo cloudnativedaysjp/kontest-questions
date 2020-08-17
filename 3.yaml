@@ -1,0 +1,52 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: q3
+  labels:
+    question.kontest.amsy.dev: "3"
+data:
+  question: |-
+    単一のPodでは、Podが削除された場合にサービスが停止してしまいます。
+    そのため、Podを複数個起動した状態を保ってくれるDeploymentなどを利用することが一般的です。
+    次のPodのレプリカが複数個作成されるように、Deploymentを作成してください。
+
+    apiVersion: v1
+    kind: Pod
+    metadata:
+      name: sample-pod
+      labels:
+        app: nginx
+    spec:
+      containers:
+      - name: nginx-container
+        image: nginx:1.19
+  hint: |-
+    https://kubernetes.io/ja/docs/concepts/workloads/controllers/deployment/
+  base_content.yaml: |-
+    apiVersion: apps/v1
+    kind: Deployment
+    metadata:
+      name: sample-deployment
+    spec:
+      replicas: 3
+  answer.yaml: |-
+    apiVersion: apps/v1
+    kind: Deployment
+    metadata:
+      name: sample-deployment
+    spec:
+      replicas: 3
+      selector:
+        matchLabels:
+          app: nginx
+      template:
+        metadata:
+          labels:
+            app: nginx
+        spec:
+          containers:
+          - name: nginx-container
+            image: nginx:1.19
+  comment: |-
+    this is comment here after correct answer

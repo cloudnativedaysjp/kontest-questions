@@ -1,0 +1,48 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: q2
+  labels:
+    question.kontest.amsy.dev: "2"
+data:
+  question: |-
+    コンテナの挙動を変えるには、一般的には「環境変数」か「設定ファイル」を用いて行います。
+    コンテナイメージの場合には、シンプルな設定変更は環境変数で行うと良いでしょう。
+
+    例えばnginxイメージでは、環境変数「NGINX_PORT」を利用することで、受け付けるポート番号を変更することができます。
+    今回は「8080」を設定し、ポート番号を変更してください。
+
+    apiVersion: v1
+    kind: Pod
+    metadata:
+      name: sample-pod
+    spec:
+      containers:
+      - name: nginx-container
+        image: nginx:1.19
+  hint: |-
+    https://kubernetes.io/ja/docs/tasks/inject-data-application/define-environment-variable-container/
+  base_content.yaml: |-
+    apiVersion: v1
+    kind: Pod
+    metadata:
+      name: sample-pod
+    spec:
+      containers:
+      - name: nginx-container
+        image: nginx:1.19
+  answer.yaml: |-
+    apiVersion: v1
+    kind: Pod
+    metadata:
+      name: sample-pod
+    spec:
+      containers:
+      - name: nginx-container
+        image: nginx:1.19
+        env:
+        - name: NGINX_PORT
+          value: "8080"
+  comment: |-
+    this is comment here after correct answer
