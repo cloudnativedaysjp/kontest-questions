@@ -1,0 +1,85 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: q6
+  labels:
+    question.kontest.amsy.dev: "6"
+data:
+  question: |-
+    Kubernetesでアプリケーションのスケーリングを行うためには、水平オートスケーラー(HPA)を使うことができます。
+    HPAは、metrics-serverまたはカスタムメトリクスから取得できるPodのCPUやメモリ等の値に基づいて、アプリケーションのレプリカ数を動的に増やしたり減らしたりする役割を持つリソースです。
+    以下のようなHPAリソースが与えられたとき、解答欄のDeploymentリソースにある問題が生じます。それを突き止め、正しくスケールするように修正してください。
+    apiVersion: autoscaling/v2beta2
+    kind: HorizontalPodAutoscaler
+    metadata:
+      name: nginx-autoscale
+    spec:
+      scaleTargetRef:
+        apiVersion: apps/v1
+        kind: Deployment
+        name: nginx-autoscale
+      minReplicas: 2
+      maxReplicas: 10
+      metrics:
+      - type: Resource
+        resource:
+          name: cpu
+          target:
+            type: Utilization
+            averageUtilization: 50
+  hint: |-
+    https://kubernetes.io/docs/concepts/containers/images/
+  base_content.yaml: |-
+    apiVersion: apps/v1
+    kind: Deployment
+    metadata:
+      name: nginx-autoscale
+    spec:
+      selector:
+        matchLabels:
+          run: nginx-autoscale
+      replicas: 1
+      template:
+        metadata:
+          labels:
+            run: nginx-autoscale
+        spec:
+          containers:
+          - name: nginx-autoscale
+            image: nginx:1.19
+            ports:
+            - containerPort: 80
+            resources:
+              limits:
+                cpu: 500m
+              requests:
+                cpu: 500m
+  answer.yaml: |-
+    apiVersion: apps/v1
+    kind: Deployment
+    metadata:
+      name: nginx-autoscale
+    spec:
+      selector:
+        matchLabels:
+          run: nginx-autoscale
+      template:
+        metadata:
+          labels:
+            run: nginx-autoscale
+        spec:
+          containers:
+          - name: nginx-autoscale
+            image: nginx:1.19
+            ports:
+            - containerPort: 80
+            resources:
+              limits:
+                cpu: 500m
+              requests:
+                cpu: 500m
+  comment: |-
+    this is comment here after correct answer
+  author: |-
+    Kohei Ota (@inductor)
