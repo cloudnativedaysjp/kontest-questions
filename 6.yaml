@@ -9,7 +9,9 @@ data:
   question: |-
     Kubernetesでアプリケーションのスケーリングを行うためには、水平オートスケーラー(HPA)を使うことができます。
     HPAは、metrics-serverまたはカスタムメトリクスから取得できるPodのCPUやメモリ等の値に基づいて、アプリケーションのレプリカ数を動的に増やしたり減らしたりする役割を持つリソースです。
-    以下のようなHPAリソースが与えられたとき、解答欄のDeploymentリソースにある問題が生じます。それを突き止め、正しくスケールするように修正してください。
+
+    今回は解答欄にあるDeploymentリソースを作成後、以下のようなHPAリソースを作成したときの事を考えます。このとき、Deploymentリソースを再度適用とするときにある問題が生じることがわかりました。原因を突き止め、正しくスケールするように修正してください。
+
     apiVersion: autoscaling/v2beta2
     kind: HorizontalPodAutoscaler
     metadata:
@@ -29,7 +31,7 @@ data:
             type: Utilization
             averageUtilization: 50
   hint: |-
-    https://kubernetes.io/docs/concepts/containers/images/
+    https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/
   base_content.yaml: |-
     apiVersion: apps/v1
     kind: Deployment
