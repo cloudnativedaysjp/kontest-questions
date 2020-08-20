@@ -1,0 +1,71 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: q8
+  labels:
+    question.kontest.amsy.dev: "8"
+data:
+  question: |-
+    Kubernetesで機密情報を別リソースとして定義してPodから読み込むことができます。そのリソースがSecretです。
+    CNDT/happyというキー/値ペアを含むcndt-secretというSecretを以下マニフェストファイルを変更して、秘密鍵 CNDTの値を後悔する環境変数を追加してください。その際、Pod内部の環境変数名としてCNDT_VARIABLEを使用してください。
+
+    apiVersion: v1
+    kind: Pod
+    metadata:
+      creationTimestamp: null
+      labels:
+        run: nginx-secret
+      name: nginx-secret
+    spec:
+      containers:
+      - image: nginx
+        name: nginx-secret
+        resources: {}
+      dnsPolicy: ClusterFirst
+      restartPolicy: Never
+    status: {}
+  hint: |-
+    https://kubernetes.io/docs/concepts/configuration/secret/
+  base_content.yaml: |-
+    apiVersion: v1
+    kind: Pod
+    metadata:
+      creationTimestamp: null
+      labels:
+        run: nginx-secret
+      name: nginx-secret
+    spec:
+      containers:
+      - image: nginx
+        name: nginx-secret
+        resources: {}
+      dnsPolicy: ClusterFirst
+      restartPolicy: Never
+    status: {}
+  answer.yaml: |-
+    apiVersion: v1
+    kind: Pod
+    metadata:
+      creationTimestamp: null
+      labels:
+        run: nginx-secret
+      name: nginx-secret
+    spec:
+      containers:
+      - image: nginx
+        name: nginx-secret
+        resources: {}
+        env:
+          - name: CNDT_VARIABLE
+            valueFrom:
+              secretKeyRef:
+                name: cndt-secret
+                key: CNDT
+      dnsPolicy: ClusterFirst
+      restartPolicy: Never
+    status: {}
+  comment: |-
+    this is comment here after correct answer
+  author: |-
+    Yutaka Ichikawa (@cyberblack28)

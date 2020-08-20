@@ -1,0 +1,49 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: q10
+  labels:
+    question.kontest.amsy.dev: "10"
+data:
+  question: |-
+    Kubernetesで永続化領域の要求を行うリソースが、PersistentVolumeClaimです。永続化領域の要求が発行されるとKube-Schedulerが保持しているPersistentVolumeから最適なVolumeを割り当てます。
+    800Mi以上のボリュームを要求し、RWXのアクセス モードを指定するcndt-pvcという名前のPersistentVolumeClaimとなるように以下マニフェストファイルを変更してください。
+
+    apiVersion: v1
+    kind: PersistentVolumeClaim
+    metadata:
+      name: cndt-pvc
+      labels:
+        app: cndt
+    spec:
+      storageClassName: cndt
+  hint: |-
+    https://kubernetes.io/docs/concepts/storage/persistent-volumes/
+  base_content.yaml: |-
+    apiVersion: v1
+    kind: PersistentVolumeClaim
+    metadata:
+      name: cndt-pvc
+      labels:
+        app: cndt
+    spec:
+      storageClassName: cndt
+  answer.yaml: |-
+    apiVersion: v1
+    kind: PersistentVolumeClaim
+    metadata:
+      name: cndt-pvc
+      labels:
+        app: cndt
+    spec:
+      storageClassName: cndt
+      accessModes:
+        - ReadWriteMany
+      resources:
+        requests:
+          storage: 800Mi
+  comment: |-
+    this is comment here after correct answer
+  author: |-
+    Yutaka Ichikawa (@cyberblack28)

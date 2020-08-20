@@ -1,0 +1,62 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: q11
+  labels:
+    question.kontest.amsy.dev: "11"
+data:
+  question: |-
+    KubernetesのPodからcndt-podという名前のPersistentVolumeClaimで要求したPersistentVolumeのVolumeを、cndt-podという名前でmountPath:/usr/share/nginx/htmlにマウントするように以下マニフェストファイルを変更してください。
+
+    apiVersion: v1
+    kind: Pod
+    metadata:
+      creationTimestamp: null
+      labels:
+        run: nginx
+      name: nginx
+    spec:
+      containers:
+      - image: nginx
+        name: nginx
+        resources: {}
+  hint: |-
+    https://kubernetes.io/docs/concepts/storage/persistent-volumes/
+  base_content.yaml: |-
+    apiVersion: v1
+    kind: Pod
+    metadata:
+      creationTimestamp: null
+      labels:
+        run: nginx
+      name: nginx
+    spec:
+      containers:
+      - image: nginx
+        name: nginx
+        resources: {}
+  answer.yaml: |-
+    apiVersion: v1
+    kind: Pod
+    metadata:
+      creationTimestamp: null
+      labels:
+        run: nginx
+      name: nginx
+    spec:
+      containers:
+      - image: nginx
+        name: nginx
+        resources: {}
+        volumeMounts:
+        - mountPath: "/usr/share/nginx/html"
+          name: cndt-pod
+      volumes:
+        - name: cndt-pod
+          persistentVolumeClaim:
+            claimName: cndt-pvc
+  comment: |-
+    this is comment here after correct answer
+  author: |-
+    Yutaka Ichikawa (@cyberblack28)

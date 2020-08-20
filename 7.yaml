@@ -1,0 +1,72 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: q7
+  labels:
+    question.kontest.amsy.dev: "7"
+data:
+  question: |-
+    Kubernetesで設定情報をKye-Valueとして保存できるリソースがConfigMapです。
+    CNDT/Goodというキー/値ペアを含むcndt-configというConfigMapを以下マニフェストファイルのPodから、/config/mapディレクトリをconfig-volumeという名前のボリュームとしてマウントするようにマニフェストファイルを変更してください。
+
+    apiVersion: v1
+    kind: Pod
+    metadata:
+      creationTimestamp: null
+      labels:
+        run: nginx-configmap
+      name: nginx-configmap
+    spec:
+      containers:
+      - image: nginx
+        name: nginx-configmap
+        resources: {}
+      dnsPolicy: ClusterFirst
+      restartPolicy: Never
+    status: {}
+  hint: |-
+    https://kubernetes.io/docs/concepts/configuration/configmap/
+  base_content.yaml: |-
+    apiVersion: v1
+    kind: Pod
+    metadata:
+      creationTimestamp: null
+      labels:
+        run: nginx-configmap
+      name: nginx-configmap
+    spec:
+      containers:
+      - image: nginx
+        name: nginx-configmap
+        resources: {}
+      dnsPolicy: ClusterFirst
+      restartPolicy: Never
+    status: {}
+  answer.yaml: |-
+    apiVersion: v1
+    kind: Pod
+    metadata:
+      creationTimestamp: null
+      labels:
+        run: nginx-configmap
+      name: nginx-configmap
+    spec:
+      containers:
+      - image: nginx
+        name: nginx-configmap
+        resources: {}
+        volumeMounts:
+        - name: config-volume
+          mountPath: /config/map
+      volumes:
+        - name: config-volume
+          configMap:
+            name: cndt-config
+      dnsPolicy: ClusterFirst
+      restartPolicy: Never
+    status: {}
+  comment: |-
+    this is comment here after correct answer
+  author: |-
+    Yutaka Ichikawa (@cyberblack28)
