@@ -47,7 +47,7 @@ data:
             - "-c"
             - |
               while :; do
-                sleep 10
+                sleep 3600
                 nginx -s reload
               done
     ---
@@ -105,7 +105,7 @@ data:
             - "-c"
             - |
               while :; do
-                sleep 10
+                sleep 3600
                 nginx -s reload
               done
     ---
