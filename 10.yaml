@@ -7,7 +7,7 @@ metadata:
     question.kontest.amsy.dev: "10"
 data:
   question: |-
-    Kubernetesで永続化領域の要求を行うリソースが、PersistentVolumeClaimです。永続化領域の要求が発行されるとKube-Schedulerが保持しているPersistentVolumeから最適なVolumeを割り当てます。
+    Kubernetesにおいて、永続化領域の要求を行うリソースがPersistentVolumeClaim(PVC)です。PVCが作成されると、利用可能なPersistentVolume(PV)の中から最適なリソースがPodに割り当てられます。
     800Mi以上のボリュームを要求し、RWXのアクセス モードを指定するcndt-pvcという名前のPersistentVolumeClaimとなるように以下マニフェストファイルを変更してください。
 
     apiVersion: v1
