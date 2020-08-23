@@ -7,7 +7,7 @@ metadata:
     question.kontest.amsy.dev: "7"
 data:
   question: |-
-    設定情報をKye-Valueとして保存できるリソースがConfigMapです。
+    設定情報をKey-Valueとして保存できるリソースがConfigMapです。
     CNDT/Goodというキー/値ペアを含むcndt-configというConfigMapを以下マニフェストファイルのPodから、/config/mapディレクトリをconfig-volumeという名前のボリュームとしてマウントするようにマニフェストファイルを変更してください。
 
     apiVersion: v1
