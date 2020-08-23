@@ -7,7 +7,7 @@ metadata:
     question.kontest.amsy.dev: "12"
 data:
   question: |-
-    kubernetesでは、ラベル機能を利用して特定のノードにPodを配置する方法があります。
+    Kubernetesでは、ラベル機能を利用して特定のノードにPodを配置する方法があります。
     arch=amd64のラベルを持つノードにcndt-redisという名前のPodが配置されるように以下マニフェストファイルを変更してください。
 
     apiVersion: v1
