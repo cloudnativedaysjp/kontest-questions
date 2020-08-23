@@ -8,7 +8,7 @@ metadata:
 data:
   question: |-
     Kubernetesでは、Podの一時ディスク領域として利用できる機能があります。Podのdeleteと同時にその領域も削除されます。
-    tmp-volという名前で/tmpを一時ディスク領域として利用できるように以下マニフェストファイルを変更してください。
+    tmp-volという名前で/tmpを一時的なディスク領域として利用できるように、以下マニフェストファイルを変更してください。
     
     apiVersion: v1
     kind: Pod
