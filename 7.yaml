@@ -7,13 +7,12 @@ metadata:
     question.kontest.amsy.dev: "7"
 data:
   question: |-
-    Kubernetesで設定情報をKye-Valueとして保存できるリソースがConfigMapです。
+    設定情報をKye-Valueとして保存できるリソースがConfigMapです。
     CNDT/Goodというキー/値ペアを含むcndt-configというConfigMapを以下マニフェストファイルのPodから、/config/mapディレクトリをconfig-volumeという名前のボリュームとしてマウントするようにマニフェストファイルを変更してください。
 
     apiVersion: v1
     kind: Pod
     metadata:
-      creationTimestamp: null
       labels:
         run: nginx-configmap
       name: nginx-configmap
@@ -21,7 +20,6 @@ data:
       containers:
       - image: nginx
         name: nginx-configmap
-        resources: {}
       dnsPolicy: ClusterFirst
       restartPolicy: Never
     status: {}
@@ -31,7 +29,6 @@ data:
     apiVersion: v1
     kind: Pod
     metadata:
-      creationTimestamp: null
       labels:
         run: nginx-configmap
       name: nginx-configmap
@@ -39,7 +36,6 @@ data:
       containers:
       - image: nginx
         name: nginx-configmap
-        resources: {}
       dnsPolicy: ClusterFirst
       restartPolicy: Never
     status: {}
@@ -47,7 +43,6 @@ data:
     apiVersion: v1
     kind: Pod
     metadata:
-      creationTimestamp: null
       labels:
         run: nginx-configmap
       name: nginx-configmap
@@ -55,7 +50,6 @@ data:
       containers:
       - image: nginx
         name: nginx-configmap
-        resources: {}
         volumeMounts:
         - name: config-volume
           mountPath: /config/map

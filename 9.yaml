@@ -7,7 +7,7 @@ metadata:
     question.kontest.amsy.dev: "9"
 data:
   question: |-
-    Kubernetesで永続化領域として確保されるVolumeが、PersistentVolumeです。
+    永続化領域として確保されるVolumeが、PersistentVolumeです。
     NFSを使用してcndt-pvという名前のPersistentVolumeを作成し、NFSサーバのIPを192.168.9.8、容量を8Gi、アクセスモードをRXW、Reclaim PolicyをRetain、そのボリュームが当該クラスタのノードの/var/lib/cndtにあることを明示するように以下マニフェストファイルに変更してください。
 
     apiVersion: v1

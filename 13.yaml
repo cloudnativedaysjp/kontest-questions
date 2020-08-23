@@ -7,13 +7,12 @@ metadata:
     question.kontest.amsy.dev: "13"
 data:
   question: |-
-    Kubernetesでは、Podの一時ディスク領域として利用できる機能があります。Podのdeleteと同時にその領域も削除されます。
+    Podの一時的なディスク領域として利用できる機能があります。Podのdeleteと同時にその領域も削除されます。
     tmp-volという名前で/tmpを一時的なディスク領域として利用できるように、以下マニフェストファイルを変更してください。
     
     apiVersion: v1
     kind: Pod
     metadata:
-      creationTimestamp: null
       labels:
         run: cndt-nginx
       name: cndt-nginx
@@ -27,7 +26,6 @@ data:
     apiVersion: v1
     kind: Pod
     metadata:
-      creationTimestamp: null
       labels:
         run: cndt-nginx
       name: cndt-nginx
@@ -39,7 +37,6 @@ data:
     apiVersion: v1
     kind: Pod
     metadata:
-      creationTimestamp: null
       labels:
         run: cndt-nginx
       name: cndt-nginx

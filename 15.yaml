@@ -7,13 +7,12 @@ metadata:
     question.kontest.amsy.dev: "15"
 data:
   question: |-
-    Kubernetesでは、個々のコンテナに対するセキュリティ設定として、SecurityContextがあります。
+    個々のコンテナに対するセキュリティ設定として、SecurityContextがあります。
     特権コンテナを利用できるように以下マニフェストファイルを変更してください。
     
     apiVersion: v1
     kind: Pod
     metadata:
-      creationTimestamp: null
       labels:
         run: cndt-nginx
       name: cndt-nginx
@@ -27,7 +26,6 @@ data:
     apiVersion: v1
     kind: Pod
     metadata:
-      creationTimestamp: null
       labels:
         run: cndt-nginx
       name: cndt-nginx
@@ -39,7 +37,6 @@ data:
     apiVersion: v1
     kind: Pod
     metadata:
-      creationTimestamp: null
       labels:
         run: cndt-nginx
       name: cndt-nginx
