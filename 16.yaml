@@ -1,0 +1,137 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: q16
+  labels:
+    question.kontest.amsy.dev: "16"
+data:
+  question: |-
+    Nginxの設定ファイルをConfigMapとして定義してnginxコンテナにマウントしています。
+    このConfigMapは任意のタイミングで更新されます。
+    更新されたConfigMapの内容をnginxプロセスに反映するために、
+    nginx-controllerコンテナから定期的にnginx -s reload コマンドを使って
+    nginxプロセスに対してOSシグナルを送信して設定ファイルの再読込を行います。
+    この方式を実現するためにはnginx-controllerコンテナからnginxコンテナのプロセス(PID)が見えている必要があります。
+    nginx-controllerコンテナからnginxコンテナで動作しているnginxプロセスが見えるように以下の設定を変更してください。
+  base_content.yaml: |-
+    apiVersion: v1
+    kind: Pod
+    metadata:
+      name: nginx
+    spec:
+      volumes:
+        - name: pid-share
+          emptyDir: {}
+        - name: nginx-config
+          configMap:
+            name: nginx-config
+      containers:
+        - name: nginx
+          image: nginx:latest
+          volumeMounts:
+            - name: pid-share
+              mountPath: /var/run
+            - name: nginx-config
+              mountPath: /etc/nginx/conf.d
+        - name: nginx-controller
+          image: nginx:latest
+          volumeMounts:
+            - name: pid-share
+              mountPath: /var/run
+              readOnly: true
+          command: 
+            - "/bin/bash"
+            - "-c"
+            - |
+              while :; do
+                sleep 10
+                nginx -s reload
+              done
+    ---
+    apiVersion: v1
+    kind: ConfigMap
+    metadata:
+      name: nginx-config
+    data:
+      default.conf: |-
+        server {
+          listen       80;
+          listen  [::]:80;
+          server_name  localhost;
+      
+      
+          location / {
+              root   /usr/share/nginx/html;
+              index  index.html index.htm;
+          }
+        
+          error_page   500 502 503 504  /50x.html;
+          location = /50x.html {
+              root   /usr/share/nginx/html;
+          }
+        }
+      hint: |-
+        https://kubernetes.io/ja/docs/tasks/configure-pod-container/share-process-namespace/
+  answer.yaml: |-
+    apiVersion: v1
+    kind: Pod
+    metadata:
+      name: nginx
+    spec:
+      shareProcessNamespace: true
+      volumes:
+        - name: pid-share
+          emptyDir: {}
+        - name: nginx-config
+          configMap:
+            name: nginx-config
+      containers:
+        - name: nginx
+          image: nginx:latest
+          volumeMounts:
+            - name: pid-share
+              mountPath: /var/run
+            - name: nginx-config
+              mountPath: /etc/nginx/conf.d
+        - name: nginx-controller
+          image: nginx:latest
+          volumeMounts:
+            - name: pid-share
+              mountPath: /var/run
+              readOnly: true
+          command: 
+            - "/bin/bash"
+            - "-c"
+            - |
+              while :; do
+                sleep 10
+                nginx -s reload
+              done
+    ---
+    apiVersion: v1
+    kind: ConfigMap
+    metadata:
+      name: nginx-config
+    data:
+      default.conf: |-
+        server {
+          listen       80;
+          listen  [::]:80;
+          server_name  localhost;
+      
+      
+          location / {
+              root   /usr/share/nginx/html;
+              index  index.html index.htm;
+          }
+        
+          error_page   500 502 503 504  /50x.html;
+          location = /50x.html {
+              root   /usr/share/nginx/html;
+          }
+        }
+  comment: |-
+    名前空間の概念の理解はKubernetesに限らずコンテナに関わる領域では非常に重要です。
+  author: |-
+    Ryoma Fujiwara (@RYoMa_0923)
