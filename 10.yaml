@@ -8,7 +8,7 @@ metadata:
 data:
   question: |-
     永続化領域の要求を行うリソースがPersistentVolumeClaim(PVC)です。PVCが作成されると、利用可能なPersistentVolume(PV)の中から最適なリソースがPodに割り当てられます。
-    800Mi以上のボリュームを要求し、RWXのアクセスモードを指定するように以下のマニフェストファイルを変更してください。
+    複数のノードからReadもWriteもアクセス可能な、800Mi以上のボリュームを要求するように以下のマニフェストファイルを変更してください。
 
     apiVersion: v1
     kind: PersistentVolumeClaim

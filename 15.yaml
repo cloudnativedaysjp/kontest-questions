@@ -18,7 +18,7 @@ data:
       name: cndt-nginx
     spec:
       containers:
-      - image: nginx:1.18
+      - image: nginx:1.19
         name: cndt-nginx
   hint: |-
     https://kubernetes.io/docs/tasks/configure-pod-container/security-context/
@@ -31,7 +31,7 @@ data:
       name: cndt-nginx
     spec:
       containers:
-      - image: nginx:1.18
+      - image: nginx:1.19
         name: cndt-nginx
   answer.yaml: |-
     apiVersion: v1
@@ -42,7 +42,7 @@ data:
       name: cndt-nginx
     spec:
       containers:
-      - image: nginx:1.18
+      - image: nginx:1.19
         name: cndt-nginx
         securityContext:
           privileged: true

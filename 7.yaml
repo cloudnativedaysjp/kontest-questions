@@ -8,7 +8,7 @@ metadata:
 data:
   question: |-
     設定情報をKey-Valueとして保存できるリソースがConfigMapです。
-    CNDT/Goodというキー/値ペアを含むcndt-configというConfigMapを以下マニフェストファイルのPodから、/config/mapディレクトリをconfig-volumeという名前のボリュームとしてマウントするようにマニフェストファイルを変更してください。
+    cndt-configというConfigMapを以下マニフェストファイルのPodから、/config/mapディレクトリをconfig-volumeという名前のボリュームとして複数のKey-Valueを一括でマウントするようにマニフェストファイルを変更してください。
 
     apiVersion: v1
     kind: Pod
@@ -20,9 +20,6 @@ data:
       containers:
       - image: nginx
         name: nginx-configmap
-      dnsPolicy: ClusterFirst
-      restartPolicy: Never
-    status: {}
   hint: |-
     https://kubernetes.io/docs/concepts/configuration/configmap/
   base_content.yaml: |-
@@ -36,9 +33,6 @@ data:
       containers:
       - image: nginx
         name: nginx-configmap
-      dnsPolicy: ClusterFirst
-      restartPolicy: Never
-    status: {}
   answer.yaml: |-
     apiVersion: v1
     kind: Pod
@@ -57,9 +51,6 @@ data:
         - name: config-volume
           configMap:
             name: cndt-config
-      dnsPolicy: ClusterFirst
-      restartPolicy: Never
-    status: {}
   comment: |-
     this is comment here after correct answer
   author: |-

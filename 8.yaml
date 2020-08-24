@@ -8,7 +8,7 @@ metadata:
 data:
   question: |-
     機密情報を別リソースとして定義してPodから読み込むことができます。そのリソースがSecretです。
-    CNDT/happyというキー/値ペアを含むcndt-secretというSecretを以下マニフェストファイルを変更して、秘密鍵 CNDTの値を後悔する環境変数を追加してください。その際、Pod内部の環境変数名としてCNDT_VARIABLEを使用してください。
+    CNDT/happyというキー/値ペアを含むcndt-secretというSecret（2つ以上のKeyが書かれてる）を以下マニフェストファイルを変更して、秘密鍵CNDTの値のみを公開する環境変数を追加してください。その際、Pod内部の環境変数名としてCNDT_VARIABLEを使用してください。
 
     apiVersion: v1
     kind: Pod
@@ -20,9 +20,6 @@ data:
       containers:
       - image: nginx
         name: nginx-secret
-      dnsPolicy: ClusterFirst
-      restartPolicy: Never
-    status: {}
   hint: |-
     https://kubernetes.io/docs/concepts/configuration/secret/
   base_content.yaml: |-
@@ -36,9 +33,6 @@ data:
       containers:
       - image: nginx
         name: nginx-secret
-      dnsPolicy: ClusterFirst
-      restartPolicy: Never
-    status: {}
   answer.yaml: |-
     apiVersion: v1
     kind: Pod
@@ -56,9 +50,6 @@ data:
               secretKeyRef:
                 name: cndt-secret
                 key: CNDT
-      dnsPolicy: ClusterFirst
-      restartPolicy: Never
-    status: {}
   comment: |-
     this is comment here after correct answer
   author: |-

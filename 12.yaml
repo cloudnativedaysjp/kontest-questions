@@ -8,7 +8,7 @@ metadata:
 data:
   question: |-
     ラベル機能を利用して特定のノードにPodを配置する方法があります。
-    arch=amd64のラベルを持つノードにcndt-redisという名前のPodが配置されるように以下マニフェストファイルを変更してください。
+    disktype=ssdのラベルを持つノードにcndt-redisという名前のPodが配置されるように以下マニフェストファイルを変更してください。
 
     apiVersion: v1
     kind: Pod
@@ -45,7 +45,7 @@ data:
       - image: redis
         name: cndt-redis
       nodeSelector:
-        arch: amd64
+        disktype: ssd
   comment: |-
     this is comment here after correct answer
   author: |-

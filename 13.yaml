@@ -7,8 +7,8 @@ metadata:
     question.kontest.amsy.dev: "13"
 data:
   question: |-
-    Podの一時的なディスク領域として利用できる機能があります。Podのdeleteと同時にその領域も削除されます。
-    tmp-volという名前で/tmpを一時的なディスク領域として利用できるように、以下マニフェストファイルを変更してください。
+    Empty Dirを使うと、Podに対して一時的なディスク領域をマウントすることができます。この領域は、Podのdeleteと同時に削除されます。
+    tmp-volという名前で/tmpを一時的なディスク領域（Empty Dir）として利用できるように、以下マニフェストファイルを変更してください。
     
     apiVersion: v1
     kind: Pod
