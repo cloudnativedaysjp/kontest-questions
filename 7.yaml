@@ -8,7 +8,7 @@ metadata:
 data:
   question: |-
     設定情報をKey-Valueとして保存できるリソースがConfigMapです。
-    cndt-configというConfigMapを以下マニフェストファイルのPodから、/config/mapディレクトリをconfig-volumeという名前のボリュームとして複数のKey-Valueを一括でマウントするようにマニフェストファイルを変更してください。
+    cndt-configというConfigMapをconfig-volumeという名前のボリュームとしてすべてののKey-Valueを一括で/config/mapディレクトリにマウントするように、以下Podのマニフェストファイルを変更してください。
 
     apiVersion: v1
     kind: Pod

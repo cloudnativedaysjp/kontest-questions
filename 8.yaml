@@ -8,7 +8,7 @@ metadata:
 data:
   question: |-
     機密情報を別リソースとして定義してPodから読み込むことができます。そのリソースがSecretです。
-    CNDT/happyというキー/値ペアを含むcndt-secretというSecret（2つ以上のKeyが書かれてる）を以下マニフェストファイルを変更して、秘密鍵CNDTの値のみを公開する環境変数を追加してください。その際、Pod内部の環境変数名としてCNDT_VARIABLEを使用してください。
+    CNDT/happyというキー/値ペアを含むcndt-secretというSecretがあります。Pod内部の環境変数名としてCNDT_VARIABLEを使用して、秘密鍵CNDTの値だけを公開するように以下のマニフェストファイルを変更してください。
 
     apiVersion: v1
     kind: Pod

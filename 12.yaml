@@ -8,7 +8,7 @@ metadata:
 data:
   question: |-
     ラベル機能を利用して特定のノードにPodを配置する方法があります。
-    disktype=ssdのラベルを持つノードにcndt-redisという名前のPodが配置されるように以下マニフェストファイルを変更してください。
+    disktype=ssdのラベルを持つノードにcndt-redisという名前のPodが配置されるように以下のマニフェストファイルを変更してください。
 
     apiVersion: v1
     kind: Pod
@@ -20,6 +20,7 @@ data:
       containers:
       - image: redis
         name: cndt-redis
+      nodeSelector:
   hint: |-
     https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/
   base_content.yaml: |-
@@ -33,6 +34,7 @@ data:
       containers:
       - image: redis
         name: cndt-redis
+      nodeSelector:
   answer.yaml: |-
     apiVersion: v1
     kind: Pod
