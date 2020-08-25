@@ -1,0 +1,52 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: q9
+  labels:
+    question.kontest.amsy.dev: "9"
+data:
+  question: |-
+    永続化領域として確保されるVolumeが、PersistentVolumeです。
+    NFSを使用してcndt-pvという名前のPersistentVolumeを作成し、NFSサーバのIPが192.168.9.8、容量が8Gi、アクセスモードがRXW、Reclaim PolicyがRetain、パスが/var/lib/cndtとなるように以下マニフェストファイルを変更してください。
+
+    apiVersion: v1
+    kind: PersistentVolume
+    metadata:
+      name: cndt-pv
+      labels:
+        type: local
+    spec:
+      storageClassName: cndt
+  hint: |-
+    https://kubernetes.io/docs/concepts/storage/persistent-volumes/
+  base_content.yaml: |-
+    apiVersion: v1
+    kind: PersistentVolume
+    metadata:
+      name: cndt-pv
+      labels:
+        type: local
+    spec:
+      storageClassName: cndt
+  answer.yaml: |-
+    apiVersion: v1
+    kind: PersistentVolume
+    metadata:
+      name: cndt-pv
+      labels:
+        type: local
+    spec:
+      storageClassName: cndt
+      capacity:
+        storage: 8Gi
+      accessModes:
+        - ReadWriteMany
+      persistentVolumeReclaimPolicy: Retain
+      nfs:
+        server: 192.168.9.8
+        path: /var/lib/cndt
+  comment: |-
+    this is comment here after correct answer
+  author: |-
+    Yutaka Ichikawa (@cyberblack28)

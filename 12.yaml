@@ -1,0 +1,54 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: q12
+  labels:
+    question.kontest.amsy.dev: "12"
+data:
+  question: |-
+    ラベル機能を利用して特定のノードにPodを配置する方法があります。
+    disktype=ssdのラベルを持つノードにcndt-redisという名前のPodが配置されるように以下のマニフェストファイルを変更してください。
+
+    apiVersion: v1
+    kind: Pod
+    metadata:
+      labels:
+        run: cndt-redis
+      name: cndt-redis
+    spec:
+      containers:
+      - image: redis
+        name: cndt-redis
+      nodeSelector:
+  hint: |-
+    https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/
+  base_content.yaml: |-
+    apiVersion: v1
+    kind: Pod
+    metadata:
+      labels:
+        run: cndt-redis
+      name: cndt-redis
+    spec:
+      containers:
+      - image: redis
+        name: cndt-redis
+      nodeSelector:
+  answer.yaml: |-
+    apiVersion: v1
+    kind: Pod
+    metadata:
+      labels:
+        run: cndt-redis
+      name: cndt-redis
+    spec:
+      containers:
+      - image: redis
+        name: cndt-redis
+      nodeSelector:
+        disktype: ssd
+  comment: |-
+    this is comment here after correct answer
+  author: |-
+    Yutaka Ichikawa (@cyberblack28)

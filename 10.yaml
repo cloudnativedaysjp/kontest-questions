@@ -1,0 +1,49 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: q10
+  labels:
+    question.kontest.amsy.dev: "10"
+data:
+  question: |-
+    永続化領域の要求を行うリソースがPersistentVolumeClaim(PVC)です。PVCが作成されると、利用可能なPersistentVolume(PV)の中から最適なリソースがPodに割り当てられます。
+    複数のノードからReadもWriteも可能で、800Mi以上のボリュームを要求するように以下のマニフェストファイルを変更してください。
+
+    apiVersion: v1
+    kind: PersistentVolumeClaim
+    metadata:
+      name: cndt-pvc
+      labels:
+        app: cndt
+    spec:
+      storageClassName: cndt
+  hint: |-
+    https://kubernetes.io/docs/concepts/storage/persistent-volumes/
+  base_content.yaml: |-
+    apiVersion: v1
+    kind: PersistentVolumeClaim
+    metadata:
+      name: cndt-pvc
+      labels:
+        app: cndt
+    spec:
+      storageClassName: cndt
+  answer.yaml: |-
+    apiVersion: v1
+    kind: PersistentVolumeClaim
+    metadata:
+      name: cndt-pvc
+      labels:
+        app: cndt
+    spec:
+      storageClassName: cndt
+      accessModes:
+        - ReadWriteMany
+      resources:
+        requests:
+          storage: 800Mi
+  comment: |-
+    this is comment here after correct answer
+  author: |-
+    Yutaka Ichikawa (@cyberblack28)

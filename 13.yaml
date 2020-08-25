@@ -1,0 +1,56 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: q13
+  labels:
+    question.kontest.amsy.dev: "13"
+data:
+  question: |-
+    Empty Dirを使うと、Podに対して一時的なディスク領域をマウントすることができます。この領域は、Podのdeleteと同時に削除されます。
+    tmp-volという名前で/tmpを一時的なディスク領域（Empty Dir）として利用できるように、以下マニフェストファイルを変更してください。
+    
+    apiVersion: v1
+    kind: Pod
+    metadata:
+      labels:
+        run: cndt-nginx
+      name: cndt-nginx
+    spec:
+      containers:
+      - image: nginx
+        name: cndt-nginx
+  hint: |-
+    https://kubernetes.io/docs/concepts/storage/volumes/#emptydir
+  base_content.yaml: |-
+    apiVersion: v1
+    kind: Pod
+    metadata:
+      labels:
+        run: cndt-nginx
+      name: cndt-nginx
+    spec:
+      containers:
+      - image: nginx
+        name: cndt-nginx
+  answer.yaml: |-
+    apiVersion: v1
+    kind: Pod
+    metadata:
+      labels:
+        run: cndt-nginx
+      name: cndt-nginx
+    spec:
+      containers:
+      - image: nginx
+        name: cndt-nginx
+        volumeMounts:
+        - mountPath: /tmp
+          name: tmp-vol
+      volumes:
+      - name: tmp-vol
+        emptyDir: {}
+  comment: |-
+    this is comment here after correct answer
+  author: |-
+    Yutaka Ichikawa (@cyberblack28)
