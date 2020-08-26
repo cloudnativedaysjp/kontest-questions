@@ -132,6 +132,6 @@ data:
           }
         }
   comment: |-
-    名前空間の概念の理解はKubernetesに限らずコンテナに関わる領域では非常に重要です。
+    Linux namespaceの理解はKubernetesに限らずコンテナに関わる領域では非常に重要です。
   author: |-
     Ryoma Fujiwara (@RYoMa_0923)
