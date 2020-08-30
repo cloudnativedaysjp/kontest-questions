@@ -1,0 +1,49 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: q20
+  labels:
+    question.kontest.amsy.dev: "20"
+data:
+  question: |-
+    KubernetesではPodの停止時に、コンテナに対してSIGTERMシグナルが送ります。
+    コンテナはSIGTERMを受けてから30秒以内（デフォルト値）にコンテナを停止する処理を行います。
+    この30秒以内に停止処理が終わらなかった場合は、SIGKILLシグナルが送られ、強制的にコンテナが停止されます。
+    停止前のデータ書き込みの時間がかかるなどの場合、30秒で終わらない場合があります。
+    SIGTERMを受けてからSIGKILLが送られるまでの猶予期間をデフォルトの30秒から90秒に変更してください。
+
+    apiVersion: v1
+    kind: Pod
+    metadata:
+      name: sample-pod
+    spec:
+      containers:
+      - name: nginx-container
+        image: nginx:1.17
+  hint: |-
+    https://kubernetes.io/ja/docs/concepts/containers/container-lifecycle-hooks/
+    https://github.com/kubernetes/kubernetes/blob/release-1.19/pkg/apis/core/types.go#L2702-L2850
+  base_content.yaml: |-
+    apiVersion: v1
+    kind: Pod
+    metadata:
+      name: sample-pod
+    spec:
+      containers:
+      - name: nginx-container
+        image: nginx:1.17
+  answer.yaml: |-
+    apiVersion: v1
+    kind: Pod
+    metadata:
+      name: sample-pod
+    spec:
+      terminationGracePeriodSeconds: 90
+      containers:
+      - name: nginx-container
+        image: nginx:1.17
+  comment: |-
+    this is comment here after correct answer
+  author: |-
+    Masaya Aoyama (@amsy810)
+
