@@ -1,0 +1,50 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: q17
+  labels:
+    question.kontest.amsy.dev: "17"
+data:
+  question: |-
+    TaintsをNodeに付与することで、Nodeに対して特定のPodしかスケジュールさせないようにすることができます。
+    「env=production:NoExecute」のTaintsが付与されたNodeに対して、下記のPodがスケジュールできるようにしてください。
+    なお、その他のTaints（env=staging:NoExecuteなど）は許容しないようにしてください。
+
+    apiVersion: v1
+    kind: Pod
+    metadata:
+      name: mypod
+    spec:
+      containers:
+      - name: nginx
+        image: nginx:1.17
+  hint: |-
+    https://kubernetes.io/ja/docs/concepts/scheduling-eviction/taint-and-toleration/
+  base_content.yaml: |-
+    apiVersion: v1
+    kind: Pod
+    metadata:
+      name: mypod
+    spec:
+      containers:
+      - name: nginx
+        image: nginx:1.17
+  answer.yaml: |-
+    apiVersion: v1
+    kind: Pod
+    metadata:
+      name: mypod
+    spec:
+      containers:
+      - name: nginx
+        image: nginx:1.17
+      tolerations:
+      - key: "env"
+        value: "production"
+        operator: "Exists"
+        effect: "NoExecute"
+  comment: |-
+    this is comment here after correct answer
+  author: |-
+    Masaya Aoyama (@amsy810)
