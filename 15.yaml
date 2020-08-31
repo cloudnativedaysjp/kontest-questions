@@ -47,6 +47,8 @@ data:
         securityContext:
           privileged: true
   comment: |-
-    this is comment here after correct answer
+    【解説 by カサレアル】
+    PodSecurityContextがPod内の全コンテナに対する共通のセキュリティ設定であることに対して、SecurityContextはPod内の各コンテナに対するセキュリティ設定です。この2つで設定が重複した場合は、SecurityContextの設定が優先されます。
+    SecurityContextは spec.containers[].securityContext で設定します。 privilaged の値を true に設定すると、そのコンテナは特権モードで実行されます。
   author: |-
     Yutaka Ichikawa (@cyberblack28)
