@@ -47,12 +47,6 @@ data:
     metadata:
       name: nginx
     spec:
-      volumes:
-        - name: pid-share
-          emptyDir: {}
-        - name: nginx-config
-          configMap:
-            name: nginx-config
       containers:
         - name: nginx
           image: nginx:1.19
@@ -70,11 +64,13 @@ data:
           command: 
             - "/bin/bash"
             - "-c"
-            - |
-              while :; do
-                sleep 3600
-                nginx -s reload
-              done
+            - "while :; do sleep 3600; nginx -s reload; done"
+      volumes:
+        - name: pid-share
+          emptyDir: {}
+        - name: nginx-config
+          configMap:
+            name: nginx-config
   answer.yaml: |-
     apiVersion: v1
     kind: Pod
@@ -82,12 +78,6 @@ data:
       name: nginx
     spec:
       shareProcessNamespace: true
-      volumes:
-        - name: pid-share
-          emptyDir: {}
-        - name: nginx-config
-          configMap:
-            name: nginx-config
       containers:
         - name: nginx
           image: nginx:1.19
@@ -105,11 +95,13 @@ data:
           command: 
             - "/bin/bash"
             - "-c"
-            - |
-              while :; do
-                sleep 3600
-                nginx -s reload
-              done
+            - "while :; do sleep 3600; nginx -s reload; done"
+      volumes:
+        - name: pid-share
+          emptyDir: {}
+        - name: nginx-config
+          configMap:
+            name: nginx-config
   comment: |-
     Linux namespaceの理解はKubernetesに限らずコンテナに関わる領域では非常に重要です。
   author: |-

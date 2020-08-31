@@ -1,0 +1,49 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: q18
+  labels:
+    question.kontest.amsy.dev: "18"
+data:
+  question: |-
+    Kubernetesでは認可の仕組みにRole-based Access Controlを利用することができます。
+    apps groupとextensions groupのDeploymentに対して、すべての操作ができるようにしてください。
+    なお、この操作には「kubectl scale deployment xxx --replicas xxx」などのスケールアウトの処理を含みます。
+
+    apiVersion: rbac.authorization.k8s.io/v1
+    kind: Role
+    metadata:
+      name: deployment-role
+    rules:
+    - verbs:
+      - "*"
+  hint: |-
+    https://kubernetes.io/docs/reference/access-authn-authz/rbac/
+    https://schoolofdevops.github.io/ultimate-kubernetes-bootcamp/configuring_authentication_and_authorization/
+  base_content.yaml: |-
+    apiVersion: rbac.authorization.k8s.io/v1
+    kind: Role
+    metadata:
+      name: deployment-role
+    rules:
+    - verbs:
+      - "*"
+  answer.yaml: |-
+    apiVersion: rbac.authorization.k8s.io/v1
+    kind: Role
+    metadata:
+      name: deployment-role
+    rules:
+    - verbs:
+      - "*"
+      apiGroups:
+      - apps
+      - extensions
+      resources:
+      - deployments
+      - deployments/scale
+  comment: |-
+    this is comment here after correct answer
+  author: |-
+    Masaya Aoyama (@amsy810)
