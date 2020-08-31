@@ -51,6 +51,8 @@ data:
       - name: tmp-vol
         emptyDir: {}
   comment: |-
-    this is comment here after correct answer
+    【解説 by カサレアル】
+    emptyDirは同一Pod内でのみ共有されるボリュームです。ライフサイクルはPodと同じです（Podが作成されるとemptyDirが作成され、Podが削除されるとemptyDirも削除される）。
+    spec.volumes.emptyDirには medium （ストレージのメディア）と sizeLimit （データ容量の上限値）という属性があります。 {} を指定すると、これらの属性はデフォルト値になります。（それぞれ ""（ノードのデフォルトメディア）、nil（無制限））
   author: |-
     Yutaka Ichikawa (@cyberblack28)
