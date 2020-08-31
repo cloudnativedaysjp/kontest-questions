@@ -51,6 +51,8 @@ data:
           persistentVolumeClaim:
             claimName: cndt-pvc
   comment: |-
-    this is comment here after correct answer
+    【解説 by カサレアル】
+    まず spec.volumes[].persistentVolumeClaim.claimName に、PersistentVolumeClaim名を指定します。併せて spec.volumes[].name に任意のボリューム名を指定します（今回はcndt-pod）。
+    そして spec.containers[].volumeMounts[] の name にボリューム名、 mountPath にマウント先のパスを指定します。
   author: |-
     Yutaka Ichikawa (@cyberblack28)
