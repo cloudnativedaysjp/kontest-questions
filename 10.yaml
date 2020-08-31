@@ -44,6 +44,9 @@ data:
         requests:
           storage: 800Mi
   comment: |-
-    this is comment here after correct answer
+    【解説 by カサレアル】
+    PersistentVolumeClaim(PVC)は「このスペックを満たすPersistenceVolumeをください」ということが書かれた、言わばPersistenceVolumeの要件定義書です。
+    spec.accessModes[] にアクセスモードを指定します。
+    spec.resources.requests.storage に最低限必要なデータ容量を指定します。
   author: |-
     Yutaka Ichikawa (@cyberblack28)
