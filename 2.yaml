@@ -45,6 +45,7 @@ data:
         - name: NGINX_PORT
           value: "8080"
   comment: |-
+    【解説 by カサレアル】
     The Twelve-Factor Appの原則に則って、コンテナやKubernetesでは設定値を環境変数で渡すことが多いです。
     （参考URL: https://12factor.net/ja/config）
     spec.containers[].env に、 name で環境変数名、 value で変数値を指定します。

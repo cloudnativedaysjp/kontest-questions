@@ -49,6 +49,7 @@ data:
           - name: nginx-container
             image: nginx:1.19
   comment: |-
+    【解説 by カサレアル】
     Deploymentを作成すると、ReplicaSetおよびPodも作成されます。
     ReplcaSetはPodの台数を管理します。障害などでPodの台数が変わってしまった場合、 spec.replicas で指定された台数をキープするように働きます。
     DeploymentはReplicaSetを管理します。バージョンアップでイメージが変更された場合などには、新しいReplicaSetを作成します。ロールバック（バージョンアップ時の障害などの際に前のReplicaSetに戻す）もDeploymentの仕事の1つです。

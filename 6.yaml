@@ -82,6 +82,7 @@ data:
               requests:
                 cpu: 500m
   comment: |-
+    【解説 by カサレアル】
     HPAは、定期的にDeploymentの spec.replicas の値を負荷状況に応じて書き換える、という動作をします（デフォルトでは15秒ごと）。
     元のDeploymentには spec.replicas: 1 の記述がありました。それを削除したのが解答例です。
     spec.replicas の値が設定されていると、次のような問題が発生します。
