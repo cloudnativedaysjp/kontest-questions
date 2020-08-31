@@ -49,6 +49,7 @@ data:
       nodeSelector:
         disktype: ssd
   comment: |-
-    this is comment here after correct answer
+    【解説 by カサレアル】
+    spec.nodeSelector にラベルを指定することで、そのラベルを持ったノードにスケジューリングされます。
   author: |-
     Yutaka Ichikawa (@cyberblack28)
