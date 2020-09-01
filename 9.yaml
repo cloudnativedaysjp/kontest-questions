@@ -48,6 +48,10 @@ data:
         path: /var/lib/cndt
   comment: |-
     【解説 by カサレアル】 
+    ■StorageClass
+    - ストレージの分類（QoSレベル、バックアップポリシー、その他クラスター管理者が定義したポリシーなど）を示します。
+    - 別途StorageClassのマニフェストを作成して定義する必要があります。
+    - pv.spec.storageClassName には、StroageClassの metadata.name を指定します。
     ■容量
     - このPVが最低限持つべきデータ容量です。
     - spec.capacity.storage に指定します。
