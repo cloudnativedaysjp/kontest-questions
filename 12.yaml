@@ -51,5 +51,9 @@ data:
   comment: |-
     【解説 by カサレアル】
     spec.nodeSelector にラベルを指定することで、そのラベルを持ったノードにスケジューリングされます。
+    他にも spec.affinity でPodスケジューリングに関する条件を指定することができます。
+    nodeAffinity : 特定条件を満たすノードに、このPodをスケジューリングする
+    podAffinity : 特定条件を満たすPodが実行されているノードやAZなどに、このPodをスケジューリングする
+    podAntiAffinity : 特定条件を満たすPodが実行されていないノードやAZなどに、このPodをスケジューリングする
   author: |-
     Yutaka Ichikawa (@cyberblack28)
