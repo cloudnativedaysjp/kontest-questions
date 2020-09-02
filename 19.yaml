@@ -10,7 +10,7 @@ data:
     Kubernetesではノードをメンテナンスなどに入れる際には、「kubectl drain」コマンドを利用してそのノード上のPodを追い出します。
     複数台のノードをdrainした際に同時に同じ種類のPodが停止されてしまうと、サービスに影響が発生してしまいます。
     複数台のノードを停止した場合でも、次のDeploymentの最低30%（minAvailable=30%）のPodが起動されていることを保証するようにPodDisruptionBudgetリソースを作成してください。
-    なお、このDeploymentのレプリカ数は変わるものとする。
+    なお、このDeploymentのレプリカ数は変わるものとします。
     
     apiVersion: apps/v1
     kind: Deployment
