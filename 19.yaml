@@ -51,6 +51,11 @@ data:
           app: nginx-app
 
   comment: |-
-    this is comment here after correct answer
+    【解説 by カサレアル】
+    PodDisruptionBudgetの spec には、下記3つの値を指定可能です。
+    - maxUnavailable : 停止できるPodの最大値です。Pod数またはパーセンテージで指定します。
+    - minAvailable : 動作しているPodの最小値です。Pod数またはパーセンテージで指定します。
+    - selector : このPodDisruptionBudgetによって管理されるPodの条件を指定します。 matchLabels にはラベル、 matchExpressions にはラベルセレクターを指定可能です。
+    今回の場合、Deploymentの spec.selector.matchLabels が app: nginx-app なので、同じラベルを PodDisruptionBudgetの spec.selector.matchLabels にも指定すればOKです。
   author: |-
     Masaya Aoyama (@amsy810)
