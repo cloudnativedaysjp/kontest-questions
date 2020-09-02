@@ -43,7 +43,9 @@ data:
       - name: nginx-container
         image: nginx:1.17
   comment: |-
-    this is comment here after correct answer
+    【解説 by カサレアル】
+    Podの削除要求が行われると、「Serviceからの除外」と「preStop処理＋SIGTERM処理」が非同期に行われます。後者の処理が spec.terminationGracePeriodSeconds で指定された期間内に終わらなかった場合は、SIGKILLシグナルによりコンテナが強制終了されてしまいます。なので terminationGracePeriodSeconds には、「preStop処理＋SIGTERM処理」が確実に終了する時間を指定しましょう。
+    もしpreStop処理だけで terminationGracePeriodSeconds の時間を使い切った場合は、SIGTERM処理の時間が2秒追加されます。
   author: |-
     Masaya Aoyama (@amsy810)
 
