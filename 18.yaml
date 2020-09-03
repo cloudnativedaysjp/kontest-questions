@@ -44,6 +44,10 @@ data:
       - deployments
       - deployments/scale
   comment: |-
-    this is comment here after correct answer
+    【解説 by カサレアル】
+    rules[].resources[] には、対象となるAPIリソース名を指定します。APIリソース名は kubectl api-resources コマンドで確認できます。ただしこのコマンドでは、 deployments/scale のようなサブリソース名は取得できません。サブリソース名の取得については、下記の記事を参照してください。
+    https://stackoverflow.com/questions/49396607/where-can-i-get-a-list-of-kubernetes-api-resources-and-subresources
+    rules[].apiGroups[] には、APIリソースのグループ名を指定します。グループ名も kubectl api-resources コマンドで確認できます。ただし、Kubernetesのバージョンアップ時にグループが変わったAPIリソースもあります。Deploymentはその1つです（ extentions -> apps ）。この場合、過去のものも含めて全てのグループ名を指定する必要がありますので、注意してください。
+    rules[].verbs[] には、各リソースに対してどのような操作をしたいかを指定します。 "*" を指定すると、全てのverbを指定したことになります。各APIリソースに対してどのようなverbが指定できるかは kubectl api-resources -o wide で確認できます。
   author: |-
     Masaya Aoyama (@amsy810)
