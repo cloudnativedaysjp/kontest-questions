@@ -51,6 +51,11 @@ data:
                 name: cndt-secret
                 key: CNDT
   comment: |-
-    this is comment here after correct answer
+    【解説 by カサレアル】 
+    ConfigMapと同様、Secretに保存された設定値を利用する方法も、主に下記の2つです。
+    1. コンテナの環境変数として利用する
+    2. Secretをコンテナにボリュームとしてマウントする
+    今回は1.の方法で利用します。この場合、 spec.containers[].env[].valueFrom.secretKeyRef の name にSecret名、 key に対象のキーを指定すればOKです。
+    指定したSecret内の設定値をすべて環境変数として読み込む場合は、 spec.containers[].envFrom[].secretRef.name にSecret名を指定すればOKです。
   author: |-
     Yutaka Ichikawa (@cyberblack28)

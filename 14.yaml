@@ -47,6 +47,8 @@ data:
       - image: nginx:1.19
         name: cndt-nginx
   comment: |-
-    this is comment here after correct answer
+    【解説 by カサレアル】
+    PodSecurityContextを使うと、Podレベルのセキュリティ設定を行えます。マニフェストにおいては spec.securityContext で設定します。
+    runAsNonRoot を true に設定すると、Pod内のコンテナをUID 0（＝root）で実行しようとすると起動に失敗します。
   author: |-
     Yutaka Ichikawa (@cyberblack28)

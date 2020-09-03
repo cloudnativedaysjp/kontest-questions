@@ -82,6 +82,13 @@ data:
               requests:
                 cpu: 500m
   comment: |-
-    this is comment here after correct answer
+    【解説 by カサレアル】
+    HPAは、定期的にDeploymentの spec.replicas の値を負荷状況に応じて書き換える、という動作をします（デフォルトでは15秒ごと）。
+    元のDeploymentには spec.replicas: 1 の記述がありました。それを削除したのが解答例です。
+    spec.replicas の値が設定されていると、次のような問題が発生します。
+    1. 最初にDeploymentがデプロイすると、Podは spec.replicas で指定された1台になる
+    2. 負荷が高くなってHPAが動くと、spec.minReplicas （今回は2）と spec.maxReplicas （今回は10）の間でPodの台数が増える
+    3. Deploymentを再デプロイすると、Podの台数が再び deployment.spec.replicas まで減る。そのあと少し時間が経つと、HPAによって台数は hpa.spec.minReplicas となる
+    このように分かりづらい挙動となってしまいますので、HPA利用時はDeploymentに spec.replicas は指定しないほうが良いでしょう。
   author: |-
     Kohei Ota (@inductor)

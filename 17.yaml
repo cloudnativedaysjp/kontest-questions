@@ -45,6 +45,18 @@ data:
         operator: "Exists"
         effect: "NoExecute"
   comment: |-
-    this is comment here after correct answer
+    【解説 by カサレアル】
+    TaintはNodeの「汚れ」で、それを許容（Tolerations）できるPodのみをスケジューリングできます。
+    Taintの書き方は「Key=Value:Effect」です。Effectは全部で3種類あります（下のものほど条件が厳しくなります）。
+    - PreferNoSchedule : 可能な限りスケジューリングしない
+    - NoSchedule : スケジューリングしない（すでにスケジューリングされているPodはそのまま）
+    - NoExecute : 実行を許可しない（すでにスケジューリングされているPodは停止される）
+    今回のNodeには「env=production:NoExecute」というTaintが付与されていますので、「envの値がproductionになっているTolerationsを持つPodのみ、実行を許可する」という意味になります。
+    このTolerationsを指定するには、 spec.tolerations に下記のように指定します。
+      - key: "env"
+        value: "production"
+        operator: "Exists"
+        effect: "NoExecute"
+    operator には Exists （KeyとValueが等しい）または Equals （Keyが存在する）を指定可能です。
   author: |-
     Masaya Aoyama (@amsy810)

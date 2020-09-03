@@ -55,6 +55,8 @@ data:
       selector:
         app: nginx-app
   comment: |-
-    this is comment here after correct answer
+    【解説 by カサレアル】
+    spec.ports[].port でService自体のポート番号を、 spec.ports[].targetPort でPodのポート番号を指定します。
+    併せて、負荷分散対象となるPodの条件を spec.selector で指定します。ここに指定されたlabelを持っているPodに負荷分散されます。Deploymentの spec.template.metadata.labels と、Serviceの spec.selector が一致していることを確認してください。
   author: |-
     Masaya Aoyama (@amsy810)

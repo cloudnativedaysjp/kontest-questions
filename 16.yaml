@@ -103,6 +103,9 @@ data:
           configMap:
             name: nginx-config
   comment: |-
-    Linux namespaceの理解はKubernetesに限らずコンテナに関わる領域では非常に重要です。
+    【解説 by カサレアル】
+    名前空間の理解は、Kubernetesに限らずコンテナに関わる領域では非常に重要です。そもそもコンテナはプロセス名前空間で実現されています。異なるプロセス名前空間同士では、プロセスID（PID）は共有されません。
+    spec.shareProcessNamespace を true に指定すると、Pod内のコンテナ間でプロセス名前空間が共有されます。これにより、他のコンテナで動いているプロセスのPIDを取得できるようになります。
+    ただし、コンテナのプロセスがPID 1で実行されなくなることには注意してください。イメージによってはPID 1以外を拒否するものがあったり、PID 1が前提になっっているものがあります。
   author: |-
     Ryoma Fujiwara (@RYoMa_0923)

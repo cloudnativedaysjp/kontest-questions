@@ -85,6 +85,13 @@ data:
                 exec:
                   command: ["sleep", "3"]
   comment: |-
-    this is comment here after correct answer
+    【解説 by カサレアル】
+    kubectl delete などでPodの削除が開始されると、
+    (1) 該当PodをServiceの転送先リストから除外する
+    (2) 該当Podの停止（preStop処理 -> SIGTERM処理 -> SIGKILL処理）
+    が非同期に行われます。
+    もし(1)がまだ終了していない段階で(2)が先に終了してしまうと、リクエストを受けたにも関わらずPodがもう存在しないので処理できない、という状況に陥ります。
+    これを防ぐには、SIGTERM処理が行われる前のpreStop処理で、時間を稼ぐ必要があります。
+    preStop処理は spec.template.spec.containers[].lifecycle.preStop に指定します。preStop処理には exec / httpGet / tcpSocket の3種類が指定可能です。今回は sleep 3 コマンドを実行したいため exec.command に ["sleep", "3"] を指定します。
   author: |-
     Masaya Aoyama (@amsy810)

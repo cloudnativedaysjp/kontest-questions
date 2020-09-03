@@ -8,7 +8,7 @@ metadata:
 data:
   question: |-
     設定情報をKey-Valueとして保存できるリソースがConfigMapです。
-    cndt-configというConfigMapをconfig-volumeという名前のボリュームとしてすべてののKey-Valueを一括で/config/mapディレクトリにマウントするように、以下Podのマニフェストファイルを変更してください。
+    cndt-configというConfigMapをconfig-volumeという名前のボリュームとしてすべてのKey-Valueを一括で/config/mapディレクトリにマウントするように、以下Podのマニフェストファイルを変更してください。
 
     apiVersion: v1
     kind: Pod
@@ -52,6 +52,10 @@ data:
           configMap:
             name: cndt-config
   comment: |-
-    this is comment here after correct answer
+    【解説 by カサレアル】 
+    ConfigMapに保存された設定値を利用する方法は、主に下記の2つです。
+    1. コンテナの環境変数として利用する
+    2. ConfigMapをコンテナにボリュームとしてマウントする
+    今回は2.の方法で利用します。この場合、まず spec.volumes[] にConfigMapをボリュームとして定義します。そして、そのボリュームを spec.containers[].volumeMounts[] に指定すればOKです。
   author: |-
     Yutaka Ichikawa (@cyberblack28)
