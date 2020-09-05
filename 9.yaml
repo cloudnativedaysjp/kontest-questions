@@ -8,7 +8,7 @@ metadata:
 data:
   question: |-
     永続化領域として確保されるVolumeが、PersistentVolumeです。
-    NFSを使用してcndt-pvという名前のPersistentVolumeを作成し、NFSサーバのIPが192.168.9.8、容量が8Gi、アクセスモードがRXW、Reclaim PolicyがRetain、パスが/var/lib/cndtとなるように以下マニフェストファイルを変更してください。
+    NFSを使用してcndt-pvという名前のPersistentVolumeを作成し、NFSサーバのIPが192.168.9.8、容量が8Gi、アクセスモードがRWX、Reclaim PolicyがRetain、パスが/var/lib/cndtとなるように以下マニフェストファイルを変更してください。
 
     apiVersion: v1
     kind: PersistentVolume
