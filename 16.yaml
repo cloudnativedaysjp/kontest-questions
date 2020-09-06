@@ -7,105 +7,47 @@ metadata:
     question.kontest.amsy.dev: "16"
 data:
   question: |-
-    Nginxの設定ファイルをConfigMapとして定義してnginxコンテナにマウントしています。
-    このConfigMapは任意のタイミングで更新されます。
-    更新されたConfigMapの内容をnginxプロセスに反映するために、
-    nginx-controllerコンテナから定期的にnginx -s reload コマンドを使って
-    nginxプロセスに対してOSシグナルを送信して設定ファイルの再読込を行います。
-    この方式を実現するためにはnginx-controllerコンテナからnginxコンテナのプロセス(PID)が見えている必要があります。
-    nginx-controllerコンテナからnginxコンテナで動作しているnginxプロセスが見えるようにマニフェストを変更してください。
-    
-    参考) nginxに読み込ませるConfigMap、問題分の通り任意のタイミングで内容が更新されます。
-    ---
-    apiVersion: v1
-    kind: ConfigMap
+    Kubernetesでは認可の仕組みにRole-based Access Controlを利用することができます。
+    apps groupとextensions groupのDeploymentに対して、すべての操作ができるようにしてください。
+    なお、この操作には「kubectl scale deployment xxx --replicas xxx」などのスケールアウトの処理を含みます。
+
+    apiVersion: rbac.authorization.k8s.io/v1
+    kind: Role
     metadata:
-      name: nginx-config
-    data:
-      default.conf: |-
-        server {
-          listen       80;
-          listen  [::]:80;
-          server_name  localhost;
-      
-      
-          location / {
-              root   /usr/share/nginx/html;
-              index  index.html index.htm;
-          }
-        
-          error_page   500 502 503 504  /50x.html;
-          location = /50x.html {
-              root   /usr/share/nginx/html;
-          }
-        }
+      name: deployment-role
+    rules:
+    - verbs:
+      - "*"
   hint: |-
-    https://kubernetes.io/ja/docs/tasks/configure-pod-container/share-process-namespace/
+    https://kubernetes.io/docs/reference/access-authn-authz/rbac/
+    https://schoolofdevops.github.io/ultimate-kubernetes-bootcamp/configuring_authentication_and_authorization/
   base_content.yaml: |-
-    apiVersion: v1
-    kind: Pod
+    apiVersion: rbac.authorization.k8s.io/v1
+    kind: Role
     metadata:
-      name: nginx
-    spec:
-      containers:
-        - name: nginx
-          image: nginx:1.19
-          volumeMounts:
-            - name: pid-share
-              mountPath: /var/run
-            - name: nginx-config
-              mountPath: /etc/nginx/conf.d
-        - name: nginx-controller
-          image: nginx:1.19
-          volumeMounts:
-            - name: pid-share
-              mountPath: /var/run
-              readOnly: true
-          command: 
-            - "/bin/bash"
-            - "-c"
-            - "while :; do sleep 3600; nginx -s reload; done"
-      volumes:
-        - name: pid-share
-          emptyDir: {}
-        - name: nginx-config
-          configMap:
-            name: nginx-config
+      name: deployment-role
+    rules:
+    - verbs:
+      - "*"
   answer.yaml: |-
-    apiVersion: v1
-    kind: Pod
+    apiVersion: rbac.authorization.k8s.io/v1
+    kind: Role
     metadata:
-      name: nginx
-    spec:
-      shareProcessNamespace: true
-      containers:
-        - name: nginx
-          image: nginx:1.19
-          volumeMounts:
-            - name: pid-share
-              mountPath: /var/run
-            - name: nginx-config
-              mountPath: /etc/nginx/conf.d
-        - name: nginx-controller
-          image: nginx:1.19
-          volumeMounts:
-            - name: pid-share
-              mountPath: /var/run
-              readOnly: true
-          command: 
-            - "/bin/bash"
-            - "-c"
-            - "while :; do sleep 3600; nginx -s reload; done"
-      volumes:
-        - name: pid-share
-          emptyDir: {}
-        - name: nginx-config
-          configMap:
-            name: nginx-config
+      name: deployment-role
+    rules:
+    - verbs:
+      - "*"
+      apiGroups:
+      - apps
+      - extensions
+      resources:
+      - deployments
+      - deployments/scale
   comment: |-
     【解説 by カサレアル】
-    名前空間の理解は、Kubernetesに限らずコンテナに関わる領域では非常に重要です。そもそもコンテナはプロセス名前空間で実現されています。異なるプロセス名前空間同士では、プロセスID（PID）は共有されません。
-    spec.shareProcessNamespace を true に指定すると、Pod内のコンテナ間でプロセス名前空間が共有されます。これにより、他のコンテナで動いているプロセスのPIDを取得できるようになります。
-    ただし、コンテナのプロセスがPID 1で実行されなくなることには注意してください。イメージによってはPID 1以外を拒否するものがあったり、PID 1が前提になっっているものがあります。
+    rules[].resources[] には、対象となるAPIリソース名を指定します。APIリソース名は kubectl api-resources コマンドで確認できます。ただしこのコマンドでは、 deployments/scale のようなサブリソース名は取得できません。サブリソース名の取得については、下記の記事を参照してください。
+    https://stackoverflow.com/questions/49396607/where-can-i-get-a-list-of-kubernetes-api-resources-and-subresources
+    rules[].apiGroups[] には、APIリソースのグループ名を指定します。グループ名も kubectl api-resources コマンドで確認できます。ただし、Kubernetesのバージョンアップ時にグループが変わったAPIリソースもあります。Deploymentはその1つです（ extentions -> apps ）。この場合、過去のものも含めて全てのグループ名を指定する必要がありますので、注意してください。
+    rules[].verbs[] には、各リソースに対してどのような操作をしたいかを指定します。 "*" を指定すると、全てのverbを指定したことになります。各APIリソースに対してどのようなverbが指定できるかは kubectl api-resources -o wide で確認できます。
   author: |-
-    Ryoma Fujiwara (@RYoMa_0923)
+    Masaya Aoyama (@amsy810)

@@ -7,88 +7,56 @@ metadata:
     question.kontest.amsy.dev: "6"
 data:
   question: |-
-    Kubernetesでアプリケーションのスケーリングを行うためには、水平オートスケーラー(HPA)を使うことができます。
-    HPAは、metrics-server等から取得できるPodのCPUやメモリの利用率などの値に基づいて、アプリケーションのレプリカ数を動的に増やしたり減らしたりする役割を持つリソースです。
+    TaintsをNodeに付与することで、Nodeに対して特定のPodしかスケジュールさせないようにすることができます。
+    「env=production:NoExecute」のTaintsが付与されたNodeに対して、下記のPodがスケジュールできるようにしてください。
+    なお、その他のTaints（env=staging:NoExecuteなど）は許容しないようにしてください。
 
-    解答欄にあるDeploymentリソースを作成後、以下のようなHPAリソースを作成したとします。ところが、一定期間後にDeploymentリソースを再度適用すると、ある問題が生じることがわかりました。原因を突き止め、正しくオートスケールするように修正してください。
-
-    apiVersion: autoscaling/v2beta2
-    kind: HorizontalPodAutoscaler
+    apiVersion: v1
+    kind: Pod
     metadata:
-      name: nginx-autoscale
+      name: mypod
     spec:
-      scaleTargetRef:
-        apiVersion: apps/v1
-        kind: Deployment
-        name: nginx-autoscale
-      minReplicas: 2
-      maxReplicas: 10
-      metrics:
-      - type: Resource
-        resource:
-          name: cpu
-          target:
-            type: Utilization
-            averageUtilization: 50
+      containers:
+      - name: nginx
+        image: nginx:1.17
   hint: |-
-    https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/
+    https://kubernetes.io/ja/docs/concepts/scheduling-eviction/taint-and-toleration/
   base_content.yaml: |-
-    apiVersion: apps/v1
-    kind: Deployment
+    apiVersion: v1
+    kind: Pod
     metadata:
-      name: nginx-autoscale
+      name: mypod
     spec:
-      selector:
-        matchLabels:
-          run: nginx-autoscale
-      replicas: 1
-      template:
-        metadata:
-          labels:
-            run: nginx-autoscale
-        spec:
-          containers:
-          - name: nginx-autoscale
-            image: nginx:1.19
-            ports:
-            - containerPort: 80
-            resources:
-              limits:
-                cpu: 500m
-              requests:
-                cpu: 500m
+      containers:
+      - name: nginx
+        image: nginx:1.17
   answer.yaml: |-
-    apiVersion: apps/v1
-    kind: Deployment
+    apiVersion: v1
+    kind: Pod
     metadata:
-      name: nginx-autoscale
+      name: mypod
     spec:
-      selector:
-        matchLabels:
-          run: nginx-autoscale
-      template:
-        metadata:
-          labels:
-            run: nginx-autoscale
-        spec:
-          containers:
-          - name: nginx-autoscale
-            image: nginx:1.19
-            ports:
-            - containerPort: 80
-            resources:
-              limits:
-                cpu: 500m
-              requests:
-                cpu: 500m
+      containers:
+      - name: nginx
+        image: nginx:1.17
+      tolerations:
+      - key: "env"
+        value: "production"
+        operator: "Equals"
+        effect: "NoExecute"
   comment: |-
     【解説 by カサレアル】
-    HPAは、定期的にDeploymentの spec.replicas の値を負荷状況に応じて書き換える、という動作をします（デフォルトでは15秒ごと）。
-    元のDeploymentには spec.replicas: 1 の記述がありました。それを削除したのが解答例です。
-    spec.replicas の値が設定されていると、次のような問題が発生します。
-    1. 最初にDeploymentがデプロイすると、Podは spec.replicas で指定された1台になる
-    2. 負荷が高くなってHPAが動くと、spec.minReplicas （今回は2）と spec.maxReplicas （今回は10）の間でPodの台数が増える
-    3. Deploymentを再デプロイすると、Podの台数が再び deployment.spec.replicas まで減る。そのあと少し時間が経つと、HPAによって台数は hpa.spec.minReplicas となる
-    このように分かりづらい挙動となってしまいますので、HPA利用時はDeploymentに spec.replicas は指定しないほうが良いでしょう。
+    TaintはNodeの「汚れ」で、それを許容（Tolerations）できるPodのみをスケジューリングできます。
+    Taintの書き方は「Key=Value:Effect」です。Effectは全部で3種類あります（下のものほど条件が厳しくなります）。
+    - PreferNoSchedule : 可能な限りスケジューリングしない
+    - NoSchedule : スケジューリングしない（すでにスケジューリングされているPodはそのまま）
+    - NoExecute : 実行を許可しない（すでにスケジューリングされているPodは停止される）
+    今回のNodeには「env=production:NoExecute」というTaintが付与されていますので、「envの値がproductionになっているTolerationsを持つPodのみ、実行を許可する」という意味になります。
+    このTolerationsを指定するには、 spec.tolerations に下記のように指定します。
+      - key: "env"
+        value: "production"
+        operator: "Equals"
+        effect: "NoExecute"
+    operator には Equals （KeyとValueが等しい）または Exists （Keyが存在する）を指定可能です。
   author: |-
-    Kohei Ota (@inductor)
+    Masaya Aoyama (@amsy810)
