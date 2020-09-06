@@ -2,9 +2,9 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: q17
+  name: q6
   labels:
-    question.kontest.amsy.dev: "17"
+    question.kontest.amsy.dev: "6"
 data:
   question: |-
     TaintsをNodeに付与することで、Nodeに対して特定のPodしかスケジュールさせないようにすることができます。

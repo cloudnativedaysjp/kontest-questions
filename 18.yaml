@@ -2,9 +2,9 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: q16
+  name: q18
   labels:
-    question.kontest.amsy.dev: "16"
+    question.kontest.amsy.dev: "18"
 data:
   question: |-
     Nginxの設定ファイルをConfigMapとして定義してnginxコンテナにマウントしています。
