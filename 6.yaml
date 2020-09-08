@@ -42,7 +42,7 @@ data:
       tolerations:
       - key: "env"
         value: "production"
-        operator: "Equals"
+        operator: "Equal"
         effect: "NoExecute"
   comment: |-
     【解説 by カサレアル】
@@ -55,8 +55,8 @@ data:
     このTolerationsを指定するには、 spec.tolerations に下記のように指定します。
       - key: "env"
         value: "production"
-        operator: "Equals"
+        operator: "Equal"
         effect: "NoExecute"
-    operator には Equals （KeyとValueが等しい）または Exists （Keyが存在する）を指定可能です。
+    operator には Equal （KeyとValueが等しい）または Exists （Keyが存在する）を指定可能です。
   author: |-
     Masaya Aoyama (@amsy810)
